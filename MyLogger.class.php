@@ -1,8 +1,23 @@
 <?php
+
+
 class MyLogger
 {
-    public function log($message, $type)
+    private $class;
+
+
+    public function __construct($class)
     {
+        if (! empty($class)) {
+            $this->class = $class;
+        } else {
+            print 'Invalid classname';
+            exit();
+        }
+
+    }
+
+    public function log($message, $type) {
         switch ($type) {
             case 'INFO':
                 $this->info($message);
@@ -10,46 +25,48 @@ class MyLogger
             case 'ERROR':
                 $this->error($message);
                 break;
-            case 'WARNING':
+            case 'warning':
                 $this->warning($message);
                 break;
-            case 'DEBUG':
+            case 'debug':
                 $this->debug($message);
                 break;
             default:
-                echo $message;
-                break;
+                print($type . $this->formattedMessage($message));
         }
     }
 
-    private function logWithTime($message)
-    {
-        echo '[' . date('H:i:s') . '] ' . $message;
+    public function warning($message) {
+        print($this->logWithTime() . 'WARNING' . $this->formattedMessage($message));
     }
 
-    public function error($message)
-    {
-        $this->logWithTime('ERROR: ' . $message . "\n");
+    public function error($message) {
+        print( $this->logWithTime() . 'ERROR' . $this->formattedMessage($message));
     }
 
-    public function info($message)
-    {
-        $this->logWithTime('INFO: ' . $message . "\n");
+    public function info($message) {
+        print($this->logWithTime() . 'INFO' . $this->formattedMessage($message));
     }
 
-    public function warning($message)
-    {
-        $this->logWithTime('WARNING: ' . $message . "\n");
+    public function debug($message) {
+        print($this->logWithTime() . 'DEBUG' . $this->formattedMessage($message));
     }
 
-    public function debug($message)
-    {
-        $this->logWithTime('DEBUG: ' . $message . "\n");
+    private function formattedMessage($message): string {
+        return ": " . $message . "\n";
+    }
+
+    private function logWithTime(): string {
+        $date = date("D M d, Y G:i");
+        return "[$date]" ." " . "$this->class " . '- ' ;
     }
 }
 
+$logger = new MyLogger("test_class");
 
-$logger = new MyLogger();
-$logger->log('Hey! :)', 'INFO');
-$logger->error('This is an error!');
-$logger->warning('warning test');
+$logger->log("Hello world!", "ERROR");
+
+$logger->warning("Hello world!");
+$logger->error("Hello world!");
+$logger->info("Hello world!");
+$logger->debug("Hello world!");
