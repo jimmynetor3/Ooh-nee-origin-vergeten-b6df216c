@@ -1,5 +1,4 @@
 <?php
-
 class MyLogger
 {
     private $class;
@@ -13,7 +12,6 @@ class MyLogger
             exit();
         }
     }
-
     public function log($message, $type)
     {
         switch ($type) {
@@ -33,39 +31,32 @@ class MyLogger
                 print($type . $this->formattedMessage($message));
         }
     }
-
     public function warning($message)
     {
         print($this->logWithTime() . 'WARNING' . $this->formattedMessage($message));
     }
-
     public function error($message)
     {
         print($this->logWithTime() . 'ERROR' . $this->formattedMessage($message));
     }
-
     public function info($message)
     {
         print($this->logWithTime() . 'INFO' . $this->formattedMessage($message));
     }
-
     public function debug($message)
     {
         print($this->logWithTime() . 'DEBUG' . $this->formattedMessage($message));
     }
-
     private function formattedMessage($message): string
     {
         return ": " . $message . "\n";
     }
-
     private function logWithTime(): string
     {
         $date = date("D M d, Y G:i");
         return "[$date]" . " " . "$this->class " . '- ';
     }
 }
-
 $logger = new MyLogger("test_class");
 $logger->log("Hello world!", "ERROR");
 $logger->warning("Hello world!");
