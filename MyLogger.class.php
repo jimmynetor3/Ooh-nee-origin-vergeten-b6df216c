@@ -54,7 +54,7 @@ class MyLogger
     private function logWithTime(): string
     {
         $date = date("D M d, Y G:i");
-        return "[$date]" . " " . "$this->class " . '- ';
+        return "[$date] $this->class - ";
     }
 }
 $logger = new MyLogger("test_class");
