@@ -1,23 +1,21 @@
 <?php
 
-
 class MyLogger
 {
     private $class;
 
-
     public function __construct($class)
     {
-        if (! empty($class)) {
+        if (!empty($class)) {
             $this->class = $class;
         } else {
             print 'Invalid classname';
             exit();
         }
-
     }
 
-    public function log($message, $type) {
+    public function log($message, $type)
+    {
         switch ($type) {
             case 'INFO':
                 $this->info($message);
@@ -36,36 +34,40 @@ class MyLogger
         }
     }
 
-    public function warning($message) {
+    public function warning($message)
+    {
         print($this->logWithTime() . 'WARNING' . $this->formattedMessage($message));
     }
 
-    public function error($message) {
-        print( $this->logWithTime() . 'ERROR' . $this->formattedMessage($message));
+    public function error($message)
+    {
+        print($this->logWithTime() . 'ERROR' . $this->formattedMessage($message));
     }
 
-    public function info($message) {
+    public function info($message)
+    {
         print($this->logWithTime() . 'INFO' . $this->formattedMessage($message));
     }
 
-    public function debug($message) {
+    public function debug($message)
+    {
         print($this->logWithTime() . 'DEBUG' . $this->formattedMessage($message));
     }
 
-    private function formattedMessage($message): string {
+    private function formattedMessage($message): string
+    {
         return ": " . $message . "\n";
     }
 
-    private function logWithTime(): string {
+    private function logWithTime(): string
+    {
         $date = date("D M d, Y G:i");
-        return "[$date]" ." " . "$this->class " . '- ' ;
+        return "[$date]" . " " . "$this->class " . '- ';
     }
 }
 
 $logger = new MyLogger("test_class");
-
 $logger->log("Hello world!", "ERROR");
-
 $logger->warning("Hello world!");
 $logger->error("Hello world!");
 $logger->info("Hello world!");
